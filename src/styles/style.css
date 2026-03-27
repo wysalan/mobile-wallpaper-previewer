@@ -1,0 +1,121 @@
+:root
+{
+    --overflow-color: #9d9d9d;
+    font-family: "Sarasa Gothic TC", sans-serif;
+}
+
+/* 使 buttomImage 超出網頁的範圍隱藏 */
+body, html {
+    /* display: block;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    justify-content: center;
+    align-items: center; */
+    overflow: hidden;
+}
+
+/* 將 container 分成三等份 */
+@media (max-width: 2048px)
+{
+    #container {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr !important;
+    }
+}
+
+@media (max-width: 1300px)
+{
+    #container {
+        display: grid;
+        grid-template-columns: 1.25fr auto 0.75fr !important;
+    }
+}
+
+/* 將 imageContainer 置頂、置底和置中 */
+.imageContainer {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-image: url("../images/GalaxyS23.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    aspect-ratio: 1080 / 2340;
+    width: 100%;
+    height: 2340px;
+    max-height: 100vh;
+    overflow: hidden;
+}
+
+/* 將左右兩側的空白 grid 填充顏色 */
+.fillArea
+{
+    visibility: visible;
+    background-color: var(--overflow-color);
+}
+
+/* 使啟動器圖片能夠整張放在網頁中 */
+/* .launcherImage {
+    visibility: visible;
+    max-width: 100%;
+    max-height: 100vh;
+    object-fit: contain;
+    z-index: 2;
+} */
+
+/* 使桌布能夠完整顯示於網頁中 */
+/*
+寬*2 > 高 (一般豎圖)
+max-width: 100vw;
+height: 100%;
+width: auto;
+min-height: unset;
+
+寬*2 < 高 (細長豎圖)
+max-width: unset;
+height: auto;
+width: 100%;
+min-height: 100vh;
+*/
+.wallpaperImg {
+    position: relative;
+    width: auto;
+    max-width: none;
+    height: 100%;
+    min-height: unset;
+    left: 0px;
+    z-index: -1;
+}
+
+#functionPanel {
+    scrollbar-width: none;
+}
+
+#functionPanel:hover {
+    scrollbar-width: thin;
+}
+
+.displayForce {
+    display: block !important;
+}
+
+.hiddenForce {
+    display: none !important;
+}
+
+.btnActive {
+    background-color: var(--color-gray-700) !important;
+    color: white !important;
+}
+
+.btnActive:hover {
+    background-color: var(--color-gray-400) !important;
+    color: black !important;
+}
+
+.btnActive:active {
+    background-color: var(--color-gray-700) !important;
+    color: white !important;
+}
