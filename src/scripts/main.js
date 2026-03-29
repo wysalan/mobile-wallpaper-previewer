@@ -1,5 +1,8 @@
 // ---------- 內部變數 ----------
 
+/** 拖入網頁中的檔案陣列 */
+let drapedFiles = []
+
 /** 圖片陣列 */
 let imageList = [];
 
@@ -148,10 +151,25 @@ function imageLoader(event) {
         imageLoadIndex = 0; // 重設圖片寫入索引值
         loadedImageCount = 0 // 重設已載入的圖片數量
     }
-    const drapedFiles = event.dataTransfer.files; // 將圖片 (event) 轉存到 drapedFiles
+    const dataTransfer = event.dataTransfer.files
+    if (dataTransfer.length) {
+        const filesList = Array.from(dataTransfer)
+        if (!filesList[0].type.includes("image/")) {
+            console.error("The file you drapped is not a image.")
+            alert("你拖入的檔案不是圖片")
+        } else {
+            imgText_total.innerHTML = "載入中";
+            drapedFiles = []
+            filesList.map((data, index) => {
+                if (data.type.includes('image/')) {
+                    drapedFiles.push(data)
+                } else {
+                    console.error(`File no. ${index + 1} (name: ${data.name}) is not a image.`)
+                }
+            })
+        }
+    }
     loadingImageCount = drapedFiles.length;
-    imgText_total.innerHTML = "載入中";
-    console.log(drapedFiles);
     for (let file of drapedFiles) {
         if (file.type.startsWith('image/')) {
             worker.postMessage({ file, index: imageLoadIndex }); // 傳送資料 (圖片及編號) 給 worker
