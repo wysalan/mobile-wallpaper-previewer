@@ -10,19 +10,19 @@
 <body>
     <!-- Image Display -->
     <div id="container">
-        <div class="fillArea"></div>
+        <div class="fillArea pointer-events-none"></div>
         <div class="imageContainer select-none" id="containerLeft" ondragenter="event.preventDefault();"ondragover="event.preventDefault();"ondrop="imageLoader(event);">
             <img src="./src/images/guideline/guideline_S23_Center.png" alt="中線" draggable="false"class="guideLine absolute hidden">
             <img src="./src/images/guideline/guideline_S23_3.png" alt="三分法" draggable="false" class="guideLine absolute select-none hidden">
             <img src="./src/images/guideline/guideline_S23_5.png" alt="五分法" draggable="false" class="guideLine absolute select-none hidden">
             <img src="./src/images/guideline/guideline_S23_Golden.png" alt="黃金分割" draggable="false" class="guideLine absolute select-none hidden">
-            <img id="wallpaperLeft" class="wallpaperImg select-none" src="" alt="桌布">
+            <img id="wallpaperLeft" class="wallpaperImg" src="" alt="桌布" ondragenter="event.preventDefault();" ondragover="event.preventDefault();">
         </div>
-        <div class="fillArea"></div>
+        <div class="fillArea pointer-events-none"></div>
         <div class="imageContainer select-none" id="containerRight" ondragenter="event.preventDefault();"ondragover="event.preventDefault();"ondrop="imageLoader(event);">
             <img id="wallpaperRight" class="wallpaperImg select-none" src="" alt="桌布">
         </div>
-        <div class="fillArea"></div>
+        <div class="fillArea pointer-events-none"></div>
     </div>
     <!-- Image Display -->
     <!-- Function Panel -->
@@ -32,37 +32,36 @@
                 <h2 id="functionPanel-title" class="text-2xl font-bold pt-3 pb-2 select-none">功能控制</h2>
                 <div class="p-1">
                     重設：
-                    <button id="resetBtn_shiftX" class="inline bg-gray-100 p-2 w-15 rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700 select-none" onclick="imgPositionReset(this)">水平</button>
-                    <button id="resetBtn_shiftY" class="inline bg-gray-100 p-2 w-15 rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700 select-none" onclick="imgPositionReset(this)">垂直</button>
-                    <button id="resetBtn_Zoom" class="inline bg-gray-100 p-2 w-15 rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700 select-none" onclick="imgPositionReset(this)">縮放</button>
+                    <button id="resetBtn_shiftX" class="inline bg-gray-100 p-2 rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700 select-none" onclick="imgPositionReset(this)">水平</button>
+                    <button id="resetBtn_shiftY" class="inline bg-gray-100 p-2 rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700 select-none" onclick="imgPositionReset(this)">垂直</button>
+                    <button id="resetBtn_Zoom" class="inline bg-gray-100 p-2 rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700 select-none" onclick="imgPositionReset(this)">縮放</button>
                 </div>
                 <div class="p-1">
                     參考線：
-                    <button id="guideLineBtn_closeAll" class="inline bg-gray-100 p-2 w-15 rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700 select-none" onclick="guideLineToggle('close', this)">全關</button>
-                    <button id="guideLineBtn_typeA" class="guideLineBtn inline bg-gray-100 p-2 w-15 rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700 select-none" onclick="guideLineToggle('disp', this)">十字</button>
-                    <button id="guideLineBtn_typeB" class="guideLineBtn inline bg-gray-100 p-2 w-15 rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700 select-none" onclick="guideLineToggle('disp', this)">三分</button>
-                    <button id="guideLineBtn_typeC" class="guideLineBtn inline bg-gray-100 p-2 w-15 rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700 select-none" onclick="guideLineToggle('disp', this)">五分</button>
-                    <button id="guideLineBtn_typeD" class="guideLineBtn inline bg-gray-100 p-2 w-15 rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700 select-none" onclick="guideLineToggle('disp', this)">黃金</button>
+                    <button id="guideLineBtn_closeAll" class="inline bg-gray-100 p-2 rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700 select-none" onclick="guideLineToggle('close', this)">全關</button>
+                    <button id="guideLineBtn_typeA" class="guideLineBtn inline bg-gray-100 p-2 rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700 select-none" onclick="guideLineToggle('disp', this)">十字</button>
+                    <button id="guideLineBtn_typeB" class="guideLineBtn inline bg-gray-100 p-2 rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700 select-none" onclick="guideLineToggle('disp', this)">三分</button>
+                    <button id="guideLineBtn_typeC" class="guideLineBtn inline bg-gray-100 p-2 rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700 select-none" onclick="guideLineToggle('disp', this)">五分</button>
+                    <button id="guideLineBtn_typeD" class="guideLineBtn inline bg-gray-100 p-2 rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700 select-none" onclick="guideLineToggle('disp', this)">黃金</button>
                 </div>
                 <div class="p-1">
                     顯示：
-                    <button id="displayBtn_switch" class="inline bg-gray-100 p-2 rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700 select-none">全部</button>
-                    <button id="displayBtn_fullImg" class="inline bg-gray-100 p-2 w-15 rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700 select-none" onclick="showFullImage(this)">完整</button>
+                    <button id="displayBtn_fullImg" class="inline bg-gray-100 p-2 rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700 select-none" onclick="showFullImage(this)">完整</button>
                     <button id="displayBtn_autoAdjustment" class="inline bg-gray-100 p-2 w-30 rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700 select-none" onclick="oneClickFeatureSwitcher()">單點切圖 (K)</button>
+                    <span class="p-1 pt-3">單點切圖：<span id="oneClickFeatureIndicator">false</span></span>
                 </div>
                 <div class="p-1">
                     雙圖版面：
-                    <button id="layoutBtn_dualView" class="inline bg-gray-100 p-2 rounded-lg
-                                hover:bg-gray-400 active:text-white active:bg-gray-700 select-none" onclick="dualViewToggle(this)">開啟</button>
-                    <button id="layoutBtn_copyToRightContainer" class="inline bg-gray-100 p-2 w-30 rounded-lg
+                    <button id="layoutBtn_dualView" class="inline bg-gray-100 p-2 rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700 select-none" onclick="dualViewToggle(this)">開啟</button>
+                    <button id="layoutBtn_copyToRightContainer" class="inline bg-gray-100 p-2 rounded-lg
                                 hover:bg-gray-400 active:text-white active:bg-gray-700
                                 disabled:bg-white/25 disabled:text-black/50 disabled:active:text-black/50 select-none" onclick="copyImageToRightContainer(); clearBtnSwitch(this)" disabled>複製至右側</button>
-                    <button id="layoutBtn_clearRightImg" class="inline bg-gray-100 p-2 w-25 rounded-lg
+                    <button id="layoutBtn_clearRightImg" class="inline bg-gray-100 p-2 rounded-lg
                                 hover:bg-gray-400 active:text-white active:bg-gray-700
                                 disabled:bg-white/25 disabled:text-black/50 disabled:active:text-black/50 select-none" onclick="clearRightImg(); clearBtnSwitch(this)" disabled>清除右圖</button>
                 </div>
                 <p class="p-1 pt-3">控制命令提示：<span id="mouseControlIndicator">水平移動</span></p>
-                <p class="p-1 pt-3">單點切換圖片：<span id="oneClickFeatureIndicator">false</span></p>
+                
             </div>
             <div id="imageControl" class="functionPanel hidden md:block">
                 <h2 class="text-2xl font-bold pt-3 pb-2 pointer-events-none select-none">圖片陣列控制</h2>
@@ -76,17 +75,29 @@
                         class="inline bg-gray-100 px-2 py-1 rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700"
                         onclick="clearCurrentImg()">清除目前圖片</button>
                     </div>
-                    <div class="pt-1 pb-2 select-none">
-                        篩選：
-                        <button id="filterBtn-all" class="inline bg-gray-100 px-2 py-1  rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700" onclick="imageFilter('init')">全部</button>
-                        <button id="filterBtn-unrated" class="inline bg-gray-100 px-2 py-1 rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700" onclick="imageFilter('unrated')">未評分</button>
-                        <button id="filterBtn-rated" class="inline bg-gray-100 px-2 py-1 rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700" onclick="imageFilter('rated')">已評分</button>
+                    <div class="py-1 select-none">
+                        <div class="py-1">
+                            評分：
+                            <button id="filterBtn-unrated" class="inline bg-gray-100 px-2 py-1 rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700" onclick="imageFilter('unrated')">未評分</button>
+                            <button id="filterBtn-rated" class="inline bg-gray-100 px-2 py-1 rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700" onclick="imageFilter('rated')">已評分</button>
+                        </div>
+                        <div class="py-1">
+                            狀態：
+                            <button id="filterBtn-status-needCrop" class="inline bg-gray-100 px-2 py-1 rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700" onclick="imageFilter('needCrop')">需裁切</button>
+                            <button id="filterBtn-status-needEdit" class="inline bg-gray-100 px-2 py-1 rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700" onclick="imageFilter('needEdit')">需編輯</button>
+                            <button id="filterBtn-status-discard" class="inline bg-gray-100 px-2 py-1 rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700" onclick="imageFilter('discard')">拋棄</button>
+                        </div>
                     </div>
-                    <p class="pb-2 select-none">目前顯示：<span id="imgText_current">0</span>／總數量：<span id="imgText_total">0</span></p>
+                    <p class="pb-2 select-none">
+                        目前顯示：<span id="imgText_current">0</span>／總數量：<span id="imgText_total">0</span>
+                        <button id="filterBtn-all" class="inline bg-gray-100 px-2 py-1  rounded-lg hover:bg-gray-400 active:text-white active:bg-gray-700" onclick="imageFilter('init')">重設篩選</button>
+                    </p>
                     <select name="fileList" id="fileList" size="2" class="block w-105 h-30 rounded-lg p-2 pl-2 mb-3 bg-gray-100 overflow-y-auto"></select>
-                    <p id="filteredFileIDList" class="w-105"></p>
-                    <p id="filteredFileCounter" class="w-105"></p>
-                    <div class="pt-3"></div>
+                    <div class="pt-1">
+                        <p id="filteredFileIDList" class="w-105"></p>
+                        <p id="filteredFileCounter" class="w-105"></p>
+                    </div>
+                    <div class="pt-1"></div>
                     <h3 class="text-2xl font-bold pt-1 pb-2 pointer-events-none select-none">圖片資訊</h2>
                     <div id="imgInfo">
                         <div class="pt-1 w-105 overflow-auto">名稱：<span id="imgText_imgName"></span></div>
