@@ -152,6 +152,7 @@ function imageLoader(event) {
         loadedImageCount = 0 // 重設已載入的圖片數量
     }
     const dataTransfer = event.dataTransfer.files
+    console.log(event.dataTransfer)
     if (dataTransfer.length) {
         const filesList = Array.from(dataTransfer)
         if (!filesList[0].type.includes("image/")) {
@@ -188,7 +189,7 @@ worker.onmessage = (e) => {
         return;
     }
     const { index, fileName, fileURL, rating, status, width, height, shiftX, shiftY, zoomRatio } = e.data;
-    const imageStatus = [ "original", "positionChanged", "needCrop", "needEdit", "discard" ];
+    const imageStatus = [ "original", "needCrop", "needEdit", "discard" ];
     imageList[index] = {
         index,
         fileName,
@@ -323,23 +324,13 @@ function imgPositionChanger(type)
             wallpaperImgGroup[0].style.top = "0px";
             break;
         case "restore":
-            if (imageList[imageShowIndex].status == "original") {
-                wallpaperImgGroup[0].style.left = `${imageList[imageShowIndex].shiftX}px`;
-                console.log(`${imageList[imageShowIndex].shiftX}`);
-                wallpaperImgGroup[0].style.top = `${imageList[imageShowIndex].shiftY}px`;
-                if (imgShowAdjustment("return")) {
-                    wallpaperImgGroup[0].style.width = `${imageList[imageShowIndex].zoomRatio}%`
-                } else {
-                    wallpaperImgGroup[0].style.height = `${imageList[imageShowIndex].zoomRatio}%`
-                }
+            wallpaperImgGroup[0].style.left = `${imageList[imageShowIndex].shiftX}px`;
+            console.log(`${imageList[imageShowIndex].shiftX}`);
+            wallpaperImgGroup[0].style.top = `${imageList[imageShowIndex].shiftY}px`;
+            if (imgShowAdjustment("return")) {
+                wallpaperImgGroup[0].style.width = `${imageList[imageShowIndex].zoomRatio}%`
             } else {
-                wallpaperImgGroup[0].style.left = "0px";
-                wallpaperImgGroup[0].style.top = "0px";
-                if (imgShowAdjustment("return")) {
-                    wallpaperImgGroup[0].style.width = "100%";
-                } else {
-                    wallpaperImgGroup[0].style.height = "100%";
-                }
+                wallpaperImgGroup[0].style.height = `${imageList[imageShowIndex].zoomRatio}%`
             }
             break;
         case "copy":
@@ -677,6 +668,51 @@ function imageFilter(type)
                 filteredFileCounter.innerHTML = `總數：${counter}`
             }
             break;
+        case "needCrop":
+            fileList.innerHTML = "";
+            fileIDList.innerHTML = "";
+            if (imageList.length) {
+                let counter = 0
+                imageList.forEach((img) => {
+                    if (img.status === "needCrop") {
+                        fileList.innerHTML += `<option class="option_fileList" value="${img.index}">${img.index + 1}. ${img.fileName}</option>`;
+                        fileIDList.innerHTML += `${img.index + 1}, `;
+                        counter++
+                    }
+                })
+                filteredFileCounter.innerHTML = `總數：${counter}`
+            }
+            break;
+        case "needEdit":
+            fileList.innerHTML = "";
+            fileIDList.innerHTML = "";
+            if (imageList.length) {
+                let counter = 0
+                imageList.forEach((img) => {
+                    if (img.status === "needEdit") {
+                        fileList.innerHTML += `<option class="option_fileList" value="${img.index}">${img.index + 1}. ${img.fileName}</option>`;
+                        fileIDList.innerHTML += `${img.index + 1}, `;
+                        counter++
+                    }
+                })
+                filteredFileCounter.innerHTML = `總數：${counter}`
+            }
+            break;
+        case "discard":
+            fileList.innerHTML = "";
+            fileIDList.innerHTML = "";
+            if (imageList.length) {
+                let counter = 0
+                imageList.forEach((img) => {
+                    if (img.status === "discard") {
+                        fileList.innerHTML += `<option class="option_fileList" value="${img.index}">${img.index + 1}. ${img.fileName}</option>`;
+                        fileIDList.innerHTML += `${img.index + 1}, `;
+                        counter++
+                    }
+                })
+                filteredFileCounter.innerHTML = `總數：${counter}`
+            }
+            break;
         default:
             console.log(type);
             break;
@@ -753,7 +789,7 @@ document.addEventListener('keydown', async(event) => {
             imageList[imageShowIndex].rating = event.key;
             loadImageInfo("rating");
         } else if (event.key % 1 == 0 && event.key > 6) {
-            imageList[imageShowIndex].status = (event.key - 5);
+            imageList[imageShowIndex].status = (event.key - 6);
             loadImageInfo("status");
         }
     }
@@ -772,6 +808,12 @@ document.addEventListener('keydown', async(event) => {
     if (event.key == "K" || event.key == "k") {
         oneClickFeature = !oneClickFeature
         oneClickFeatureIndicator.innerHTML = oneClickFeature.toString()
+    }
+
+    if(event.key == "c" || event.key == "C")
+    {
+        functionPanelGroup.classList.toggle('hidden')
+        fpImageControl.classList.toggle('hidden')
     }
 })
 
@@ -823,12 +865,6 @@ imageContainerGroup[0].addEventListener('mousedown', (e) => {
         } else {
             imageInitScale = parseInt(wallpaperImgGroup[0].style.height);
         }
-    }
-
-    if(e.button == 1)
-    {
-        functionPanelGroup.classList.toggle('hidden')
-        fpImageControl.classList.toggle('hidden')
     }
 })
 
